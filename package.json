@@ -1,0 +1,14 @@
+{
+  "name": "thoughwork-application-challenge",
+  "version": "1.0.0",
+  "description": "Application Challenge - Open-Closed game",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Chayatan Ang.",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine": "^3.5.0"
+  }
+}
