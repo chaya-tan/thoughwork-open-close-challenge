@@ -31,6 +31,8 @@ const recursiveAsyncReadLine = function() {
     } else {
       console.log(`${input} is a wrong format`);
     }
+    console.log(turn.randomHands());
+    turn.switchUserPosition();
     recursiveAsyncReadLine();
   });
 };

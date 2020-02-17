@@ -7,6 +7,21 @@ class GameTurn {
     this.isUserBePredictor = !this.isUserBePredictor;
   }
 
+  setUserPosition(isPredictor) {
+    this.isUserBePredictor = isPredictor;
+  }
+
+  randomHands() {
+    const sign = ["O", "C"];
+    let result =
+      sign[Math.floor(Math.random() * 2)] + sign[Math.floor(Math.random() * 2)];
+    if (this.isUserBePredictor) {
+      const prediction = Math.ceil(Math.random() * 4);
+      result += prediction;
+    }
+    return result;
+  }
+
   isInputFormatCorrect(isPredictor, input) {
     const predictor_length = 3;
     const nonpredictor_length = 2;
