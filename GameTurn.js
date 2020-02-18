@@ -44,18 +44,30 @@ class GameTurn {
     };
 
     if (this.isUserBePredictor) {
-      if (input.length !== predictor_length) {
-        result.message = `Bad input: now you are the predictor. The input should contains ${predictor_length} characters. in this example format: 'OC2', 'OO4'`;
+      if (
+        input.length == nonpredictor_length &&
+        input.match(/[OC][OC]/g) !== null
+      ) {
+        result.message = `Hint: now you are the predictor. Please provide prediction. Please try again in this following format: 'CO3'`;
+      } else if (input.length !== predictor_length) {
+        result.message = `Hint: now you are the predictor. The input should contains ${predictor_length} characters. in this example format: 'OC2', 'OO4'`;
+      } else if (input.match(/[OC][OC][5-9]/g) !== null) {
+        result.message = `Hint: You and AI has total 4 hands so the prediction should be in range 0-4`;
       } else if (input.match(/[OC][OC][0-4]/g) === null) {
-        result.message = `error: predictor should input O or C (all in uppercase) for 2 characters and the number of opened hand prediction between 0-4`;
+        result.message = `Hint: predictor should input O or C for 2 characters and the number of opened hand prediction between 0-4`;
       } else {
         result.passed = true;
       }
     } else {
-      if (input.length !== nonpredictor_length) {
-        result.message = `Bad input: Now you are the non-predictor. The input should contains ${nonpredictor_length} characters. in this example format: 'OC', 'OO'.`;
+      if (
+        input.length === predictor_length &&
+        input.match(/[OC][OC][0-4]/g) !== null
+      ) {
+        result.message = `Hint: now you are the predictor. The prediction is not expected. Please try again in this following format: 'CO'`;
+      } else if (input.length !== nonpredictor_length) {
+        result.message = `Hint: Now you are the non-predictor. The input should contains ${nonpredictor_length} characters. in this example format: 'OC', 'OO'.`;
       } else if (input.match(/[OC][OC]/g) === null) {
-        result.message = `error: non-predictor should input only O or C (all in uppercase) for 2 characters `;
+        result.message = `Hint: non-predictor should input only O or C for 2 characters. in this example format: 'OC', 'OO'. `;
       } else {
         result.passed = true;
       }

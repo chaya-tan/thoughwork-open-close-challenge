@@ -1,9 +1,9 @@
-const game = require("./GameTurn");
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
+const game = require("./GameTurn");
 const turn = new game.GameTurn();
 
 console.log("\nWelcome to the open-close game!\n");
@@ -30,7 +30,10 @@ const recursiveAsyncReadLine = function() {
       turn.isUserBePredictor ? "predictor" : "non-predictor"
     }, what is your input?\n`,
     input => {
-      if (turn.isInputFormatCorrect(input).passed) {
+      input += "";
+      input = input.toUpperCase();
+      const validation_result = turn.isInputFormatCorrect(input);
+      if (validation_result.passed) {
         const AIanswer = turn.randomHands();
         const totalOpenHands = turn.openHandCounter(input, AIanswer);
         const prediction = turn.isUserBePredictor
@@ -42,26 +45,29 @@ const recursiveAsyncReadLine = function() {
         console.log(`prediction = ${prediction}`);
 
         if (totalOpenHands == prediction) {
+          console.log("the prediction is correct!");
           console.log(
             turn.isUserBePredictor ? "\nYOU WON!!\n" : "\nYOU LOSE!!\n"
           );
           readline.question(
-            "Do you want to play again? if yes, type 'Y' otherwise the game will be closed",
+            "Do you want to play again? if yes, type 'Y' otherwise the game will be closed\n",
             input => {
               if (input === "Y") {
                 turn.setUserPositionToPredictor(true);
                 recursiveAsyncReadLine();
               } else {
-                console.log("\nGoodbye :). Have a nice day!\n");
+                console.log("\nOk, Goodbye :). Have a nice day!\n");
                 readline.close();
               }
             }
           );
         } else {
+          console.log("the prediction is not correct. continue");
           turn.switchUserPosition();
         }
       } else {
         console.log(`${input} is a wrong format. please try again!`);
+        console.log(validation_result.message);
       }
 
       recursiveAsyncReadLine();
