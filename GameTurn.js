@@ -7,7 +7,7 @@ class GameTurn {
     this.isUserBePredictor = !this.isUserBePredictor;
   }
 
-  setUserPosition(isPredictor) {
+  setUserPositionToPredictor(isPredictor) {
     this.isUserBePredictor = isPredictor;
   }
 
@@ -15,44 +15,56 @@ class GameTurn {
     const sign = ["O", "C"];
     let result =
       sign[Math.floor(Math.random() * 2)] + sign[Math.floor(Math.random() * 2)];
-    if (this.isUserBePredictor) {
+    if (!this.isUserBePredictor) {
+      console.log("AI is the predictor");
       const prediction = Math.ceil(Math.random() * 4);
       result += prediction;
     }
     return result;
   }
 
-  isInputFormatCorrect(isPredictor, input) {
+  openHandCounter(input1, input2) {
+    input1 += "";
+    input2 += "";
+
+    const totalOpenHands1 = input1.match(/O/g);
+    const totalOpenHands2 = input2.match(/O/g);
+    if (totalOpenHands === null) {
+      totalOpenHands = 0;
+    } else {
+      totalOpenHands = totalOpenHands.length;
+    }
+    return totalOpenHands;
+  }
+
+  isInputFormatCorrect(input) {
     const predictor_length = 3;
     const nonpredictor_length = 2;
+
     input += "";
     let result = {
       passed: false,
       message: ""
     };
 
-    if ((isPredictor === 0) | (isPredictor === 1)) {
-      if (isPredictor) {
-        if (input.length !== predictor_length) {
-          result.message = `Bad input: now you are the predictor. The input should contains ${predictor_length} characters. in this example format: 'OC2', 'OO4'`;
-        } else if (input.match(/[OC][OC][0-4]/g) === null) {
-          result.message = `error: predictor should input O or C (all in uppercase) for 2 characters and the number of opened hand prediction between 0-4`;
-        } else {
-          result.passed = true;
-        }
+    if (this.isUserBePredictor) {
+      if (input.length !== predictor_length) {
+        result.message = `Bad input: now you are the predictor. The input should contains ${predictor_length} characters. in this example format: 'OC2', 'OO4'`;
+      } else if (input.match(/[OC][OC][0-4]/g) === null) {
+        result.message = `error: predictor should input O or C (all in uppercase) for 2 characters and the number of opened hand prediction between 0-4`;
       } else {
-        if (input.length !== nonpredictor_length) {
-          result.message = `Bad input: Now you are the non-predictor. The input should contains ${nonpredictor_length} characters. in this example format: 'OC', 'OO'.`;
-        } else if (input.match(/[OC][OC]/g) === null) {
-          result.message = `error: non-predictor should input only O or C (all in uppercase) for 2 characters `;
-        } else {
-          result.passed = true;
-        }
+        result.passed = true;
       }
     } else {
-      result.message =
-        "error: input error. expect only 1 for predictor or 0 for non-predictor";
+      if (input.length !== nonpredictor_length) {
+        result.message = `Bad input: Now you are the non-predictor. The input should contains ${nonpredictor_length} characters. in this example format: 'OC', 'OO'.`;
+      } else if (input.match(/[OC][OC]/g) === null) {
+        result.message = `error: non-predictor should input only O or C (all in uppercase) for 2 characters `;
+      } else {
+        result.passed = true;
+      }
     }
+
     return result;
   }
 }
