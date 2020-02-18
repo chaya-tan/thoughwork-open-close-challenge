@@ -25,18 +25,48 @@ console.log(
 );
 
 const recursiveAsyncReadLine = function() {
-  readline.question("You are the predictor, what is your input?", input => {
-    if (turn.isInputFormatCorrect(1, input).passed) {
-      console.log(`${input} is a correct format`);
-    } else {
-      console.log(`${input} is a wrong format`);
+  readline.question(
+    `\nYou are the ${
+      turn.isUserBePredictor ? "predictor" : "non-predictor"
+    }, what is your input?\n`,
+    input => {
+      if (turn.isInputFormatCorrect(input).passed) {
+        const AIanswer = turn.randomHands();
+        const totalOpenHands = turn.openHandCounter(input, AIanswer);
+        const prediction = turn.isUserBePredictor
+          ? input.match(/[0-4]/g)
+          : AIanswer.match(/[0-4]/g);
+
+        console.log(`AI: ${AIanswer}`);
+        console.log(`total open hand = ${totalOpenHands}`);
+        console.log(`prediction = ${prediction}`);
+
+        if (totalOpenHands == prediction) {
+          console.log(
+            turn.isUserBePredictor ? "\nYOU WON!!\n" : "\nYOU LOSE!!\n"
+          );
+          readline.question(
+            "Do you want to play again? if yes, type 'Y' otherwise the game will be closed",
+            input => {
+              if (input === "Y") {
+                turn.setUserPositionToPredictor(true);
+                recursiveAsyncReadLine();
+              } else {
+                console.log("\nGoodbye :). Have a nice day!\n");
+                readline.close();
+              }
+            }
+          );
+        } else {
+          turn.switchUserPosition();
+        }
+      } else {
+        console.log(`${input} is a wrong format. please try again!`);
+      }
+
+      recursiveAsyncReadLine();
     }
-    console.log(turn.randomHands());
-    turn.switchUserPosition();
-    recursiveAsyncReadLine();
-  });
+  );
 };
 
 recursiveAsyncReadLine();
-
-//   readline.close();

@@ -27,14 +27,10 @@ class GameTurn {
     input1 += "";
     input2 += "";
 
-    const totalOpenHands1 = input1.match(/O/g);
-    const totalOpenHands2 = input2.match(/O/g);
-    if (totalOpenHands === null) {
-      totalOpenHands = 0;
-    } else {
-      totalOpenHands = totalOpenHands.length;
-    }
-    return totalOpenHands;
+    const totalOpenHands1 = (input1.match(/O/g) || []).length;
+    const totalOpenHands2 = (input2.match(/O/g) || []).length;
+
+    return totalOpenHands1 + totalOpenHands2;
   }
 
   isInputFormatCorrect(input) {

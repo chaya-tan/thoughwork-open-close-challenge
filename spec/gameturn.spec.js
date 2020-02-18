@@ -66,4 +66,16 @@ describe("GameTurn", function() {
       expect(turn.isInputFormatCorrect(AIans).passed).toBe(true);
     });
   });
+
+  describe("Open hands counter", function() {
+    it("should count 'OC' and 'CC3' as 1", function() {
+      expect(turn.openHandCounter("OC", "CC3")).toBe(1);
+    });
+    it("should count 'CC' and 'CC1' as 0", function() {
+      expect(turn.openHandCounter("CC", "CC1")).toBe(0);
+    });
+    it("should count 'OO' and 'CO2' as 3", function() {
+      expect(turn.openHandCounter("OO", "CO2")).toBe(3);
+    });
+  });
 });
