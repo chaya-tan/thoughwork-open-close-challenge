@@ -1,8 +1,6 @@
-# thoughwork-open-close-challenge
+# The Thoughwork Open-Closed Game
 
-The Open-Closed Game
-
-Rules of the game:
+## Rules
 
 This game is played between two players.
 
