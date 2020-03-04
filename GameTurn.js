@@ -30,7 +30,6 @@ class GameTurn {
   openHandCounter(inputArray) {
     let totalOpenHand = 0;
     for (let input of inputArray) {
-      console.log("input", input);
       input += "";
       totalOpenHand += (input.match(/O/g) || []).length;
     }
