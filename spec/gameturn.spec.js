@@ -25,10 +25,13 @@ describe("GameTurn", function() {
       expect(turn.isInputFormatCorrect("prayut").passed).toBe(false);
     });
 
-    it("should pass if users enter the correct format", function() {
+    it("should pass if predictor user enter the correct format", function() {
       turn.setUserPositionToPredictor(true);
       expect(turn.isInputFormatCorrect("OC4").passed).toBe(true);
       expect(turn.isInputFormatCorrect("CO0").passed).toBe(true);
+    });
+
+    it("should pass if non-predictor user enter the correct format", function() {
       turn.setUserPositionToPredictor(false);
       expect(turn.isInputFormatCorrect("CO").passed).toBe(true);
       expect(turn.isInputFormatCorrect("OO").passed).toBe(true);
