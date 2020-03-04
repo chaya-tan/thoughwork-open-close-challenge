@@ -27,7 +27,7 @@ class GameTurn {
     return result;
   }
 
-  openHandCounter(inputArray) {
+  openHandCount(inputArray) {
     let totalOpenHand = 0;
     for (let input of inputArray) {
       input += "";

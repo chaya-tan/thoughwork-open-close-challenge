@@ -35,7 +35,7 @@ const recursiveAsyncReadLine = function() {
       const validation_result = turn.isInputFormatCorrect(input);
       if (validation_result.passed) {
         const AIanswer = turn.randomHands();
-        const totalOpenHands = turn.openHandCounter([input, AIanswer]);
+        const totalOpenHands = turn.openHandCount([input, AIanswer]);
         const prediction = turn.isUserBePredictor
           ? input.match(/[0-4]/g)
           : AIanswer.match(/[0-4]/g);
