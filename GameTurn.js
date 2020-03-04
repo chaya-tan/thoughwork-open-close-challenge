@@ -11,26 +11,30 @@ class GameTurn {
     this.isUserBePredictor = isPredictor;
   }
 
-  randomHands() {
+  randomHand() {
     const sign = ["O", "C"];
-    let result =
-      sign[Math.floor(Math.random() * 2)] + sign[Math.floor(Math.random() * 2)];
+    const randomIndex = Math.floor(Math.random() * sign.length);
+    return sign[randomIndex];
+  }
+
+  randomHands() {
+    let result = this.randomHand() + this.randomHand();
+    const totalHands = 4;
     if (!this.isUserBePredictor) {
-      console.log("AI is the predictor");
-      const prediction = Math.ceil(Math.random() * 4);
+      const prediction = Math.ceil(Math.random() * totalHands);
       result += prediction;
     }
     return result;
   }
 
-  openHandCounter(input1, input2) {
-    input1 += "";
-    input2 += "";
-
-    const totalOpenHands1 = (input1.match(/O/g) || []).length;
-    const totalOpenHands2 = (input2.match(/O/g) || []).length;
-
-    return totalOpenHands1 + totalOpenHands2;
+  openHandCounter(inputArray) {
+    let totalOpenHand = 0;
+    for (let inputIndex = 0; inputIndex < inputArray.length; inputIndex++) {
+      let thisInput = inputArray[inputIndex];
+      thisInput += "";
+      totalOpenHand += (thisInput.match(/O/g) || []).length;
+    }
+    return totalOpenHand;
   }
 
   isInputFormatCorrect(input) {
