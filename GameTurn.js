@@ -17,6 +17,12 @@ class GameTurn {
     this.isUserBePredictor = isPredictor;
   }
 
+  getPredictionNumber(input, AIanswer) {
+    return this.isUserBePredictor
+      ? input.match(/[0-4]/g)
+      : AIanswer.match(/[0-4]/g);
+  }
+
   randomHand() {
     const sign = ["O", "C"];
     const randomIndex = Math.floor(Math.random() * sign.length);
@@ -43,7 +49,7 @@ class GameTurn {
     return totalOpenHand;
   }
 
-  getValidationResult(role, input) {
+  getCommonErrorMessages(role, input) {
     input += "";
     let result = {
       passed: false,
@@ -76,12 +82,39 @@ class GameTurn {
     return result;
   }
 
+  isResultNotPassAndCanNotDetectErrorType(result) {
+    return !result.passed && result.message == "";
+  }
+
+  getValidationResult(role, input) {
+    let result = this.getCommonErrorMessages(role, input);
+    if (this.isResultNotPassAndCanNotDetectErrorType(result)) {
+      result.message = `Hint: now you are the ${
+        this.isUserBePredictor ? "predictor" : "non-predictor"
+      }. The input should be in this example format: ${
+        this.isUserBePredictor ? `OC2', 'OO4'` : `'OC', 'CC'`
+      }`;
+    }
+    return result;
+  }
+
   isInputFormatCorrect(input) {
+    input += "";
+    input = input.toUpperCase();
     if (this.isUserBePredictor) {
       return this.getValidationResult(ROLES.predictor, input);
     } else {
       return this.getValidationResult(ROLES.nonPredictor, input);
     }
+  }
+
+  reportGameResult() {
+    console.log("⭕️ the prediction is correct!");
+    console.log(
+      this.isUserBePredictor
+        ? "\n🎉 🎉 YOU WON!!🎉 🎉\n"
+        : "\n☠️ ☠️ YOU LOSE!!☠️ ☠️\n"
+    );
   }
 }
 
