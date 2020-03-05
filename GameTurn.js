@@ -85,9 +85,6 @@ class GameTurn {
   }
 }
 
-const g = new GameTurn();
-console.log(g.isInputFormatCorrect("OC"));
-
 module.exports = {
   GameTurn: GameTurn
 };
