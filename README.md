@@ -39,9 +39,20 @@ was won, or move to the next round.
 
 This is a console application. So
 
-1. Go to this directory in any shell program
-2. type `node index.js`
-3. start playing!
+1. Make sure you have installed node. If not check out
+   [Node.js](https://nodejs.org/en/). This program is developed and tested in
+   v10.16.3
+2. Go to this directory in any shell program
+3. type `node index.js`
+4. start playing!
+
+## How to run test
+
+1. Make sure you have [jasmine](https://jasmine.github.io/) command line
+   installed. If not check out
+   [Jasmine Documentation](https://jasmine.github.io/)
+2. Go to this directory in any shell program
+3. type `jasmine`
 
 ## Note
 
