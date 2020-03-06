@@ -101,11 +101,10 @@ class GameTurn {
   isInputFormatCorrect(input) {
     input += "";
     input = input.toUpperCase();
-    if (this.isUserBePredictor) {
-      return this.getValidationResult(ROLES.predictor, input);
-    } else {
-      return this.getValidationResult(ROLES.nonPredictor, input);
-    }
+    const currentROLE = this.isUserBePredictor
+      ? ROLES.predictor
+      : ROLES.nonPredictor;
+    return this.getValidationResult(currentROLE, input);
   }
 
   reportGameResult() {
