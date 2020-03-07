@@ -1,3 +1,4 @@
+const fs = require("fs");
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout
@@ -7,23 +8,12 @@ const game = require("./GameTurn");
 const turn = new game.GameTurn();
 
 const greeting = function() {
-  console.log("\n🎈🎈 Welcome to the OPEN CLOSE game! 🎈🎈\n");
-
-  console.log(
-    "📒 RULES 📒\n🖍  This game is a prediction game. \n🖍  One player is the predictor in each turn. \n🖍  He/she has to predict how many open hands in totals. Every player has to show 2 hands, either OPEN or CLOSE.\n🖍  the predictor is changed in each round.\n🖍  The player who predict correctly is win.\n\n"
-  );
-  console.log(
-    "📒 How to play:📒\n🖍  To show your hands in this game, you will specify whether your hands are open or close with 'O' or 'C'"
-  );
-  console.log(
-    "🖍  each player has 2 hands so your hand would be 'CC', 'CO', 'OC' or 'OO'"
-  );
-  console.log(
-    "🖍  for the predictor, you must guess how many hands are open in total. so it can be only 0-4 opened hand"
-  );
-  console.log(
-    "🖍  You can guess the openning hand in this format: 'CO4'. Just add the number after the input!\n"
-  );
+  try {
+    var data = fs.readFileSync("greeting.txt", "utf8");
+    console.log(data.toString());
+  } catch (e) {
+    console.log("Error:", e.stack);
+  }
 };
 
 const reportGameStatus = function(AIanswer, totalOpenHands, prediction) {
@@ -69,8 +59,9 @@ const playGame = function() {
           turn.switchUserPosition();
         }
       } else {
-        console.log(`\n❌  '${input}' is a wrong format  please try again!`);
-        console.log(`➡️  ${validation_result.message}`);
+        console.log(
+          `\n❌  '${input}' is a wrong format  please try again!\n➡️  ${validation_result.message}`
+        );
       }
       playGame();
     }
